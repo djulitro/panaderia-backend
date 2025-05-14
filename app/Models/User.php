@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'organization_id',
+        'role_id',
         'name',
         'last_name',
         'email',
@@ -52,5 +53,15 @@ class User extends Authenticatable
     public function organization()
     {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role->name === $role;
     }
 }
