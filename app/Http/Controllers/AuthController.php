@@ -23,9 +23,13 @@ class AuthController extends Controller
             // Cargamos la organización y el tipo de usuario
             $user->load('organization');
 
+            // Agregamos un expired_at al token
+            $expiredAt = now()->addMinutes(config('sanctum.expiration', 60));
+
             return response()->json([
                 'user' => $user,
                 'token' => $token,
+                'expires_at' => $expiredAt,
                 'token_type' => 'Bearer',
             ]);
         }
